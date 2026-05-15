@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Service Booking - Smart Mobile Hub{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <div class="service-wrapper">
+        <div class="service-info">
+            <h2>Repair & Service</h2>
+            <p>Is your device facing issues? Book a repair service with our certified technicians.</p>
+            <ul class="features-list">
+                <li>✔️ Genuine Parts</li>
+                <li>✔️ 6 Months Warranty on Repairs</li>
+                <li>✔️ Fast Turnaround Time</li>
+                <li>✔️ Free Diagnostic Check</li>
+            </ul>
+        </div>
+        <div class="service-form-container">
+            <h2>Book a Service</h2>
+            <form method="POST" action="{{ url_for('service') }}" class="styled-form">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" name="customer_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Device Model</label>
+                    <input type="text" name="device_model" required placeholder="e.g. iPhone 14 Pro Max">
+                </div>
+                <div class="form-group">
+                    <label>Issue Description</label>
+                    <textarea name="issue_description" rows="4" required placeholder="Describe the problem you are facing..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Submit Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

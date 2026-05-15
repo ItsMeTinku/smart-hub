@@ -1,0 +1,39 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="admin-panel-section">
+    <h2>Customer Inquiries</h2>
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inquiry in inquiries %}
+            <tr>
+                <td>{{ inquiry.created_at.split()[0] if inquiry.created_at else '' }}</td>
+                <td>{{ inquiry.name }}</td>
+                <td>
+                    {{ inquiry.email }}<br>
+                    {{ inquiry.phone }}
+                </td>
+                <td style="max-width: 300px; word-wrap: break-word;">{{ inquiry.message }}</td>
+                <td class="action-links">
+                    <a href="{{ url_for('delete_inquiry', id=inquiry.id) }}" class="delete" onclick="return confirm('Delete this inquiry?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not inquiries %}
+            <tr>
+                <td colspan="5">No inquiries yet.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

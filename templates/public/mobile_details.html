@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ mobile.name }} - Smart Mobile Hub{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <div class="product-details-container">
+        <div class="product-image-large">
+            {% if mobile.image_url %}
+            <img src="{{ url_for('static', filename='images/products/' + mobile.image_url) }}" alt="{{ mobile.name }}">
+            {% else %}
+            <div class="placeholder-img large">Device Image</div>
+            {% endif %}
+        </div>
+        <div class="product-specs">
+            <span class="brand-badge">{{ mobile.brand_name }}</span>
+            <h1>{{ mobile.name }}</h1>
+            <p class="price-large">₹{{ mobile.price }}</p>
+            
+            <div class="stock-status">
+                {% if mobile.stock > 0 %}
+                <span class="in-stock">In Stock ({{ mobile.stock }} available)</span>
+                {% else %}
+                <span class="out-of-stock">Out of Stock</span>
+                {% endif %}
+            </div>
+
+            <div class="description mt-3">
+                <h3>Description</h3>
+                <p>{{ mobile.description }}</p>
+            </div>
+
+            <div class="specs-table mt-3">
+                <h3>Specifications</h3>
+                <p>{{ mobile.specs }}</p>
+            </div>
+            
+            <div class="action-buttons mt-4">
+                <a href="{{ url_for('contact') }}?inquiry_for={{ mobile.name }}" class="btn-primary">Inquire Now</a>
+                <a href="{{ url_for('compare') }}?m1={{ mobile.id }}" class="btn-secondary">Compare</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

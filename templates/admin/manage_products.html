@@ -1,0 +1,94 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="admin-panel-section">
+    <h2>Manage Products</h2>
+    <form method="POST" enctype="multipart/form-data" class="admin-form" style="max-width: 800px; margin-bottom: 30px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Brand</label>
+                <select name="brand_id" required>
+                    <option value="">-- Select Brand --</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" step="0.01" name="price" required>
+            </div>
+            <div class="form-group">
+                <label>Stock Quantity</label>
+                <input type="number" name="stock" required value="0">
+            </div>
+            <div class="form-group">
+                <label>Featured Product</label>
+                <div style="margin-top: 10px;">
+                    <input type="checkbox" name="is_featured" value="1" style="width: auto;"> Yes, display on homepage
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Product Image</label>
+                <input type="file" name="image" accept="image/*">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Short Description</label>
+            <textarea name="description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Full Specifications</label>
+            <textarea name="specs" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn-admin">Add Product</button>
+    </form>
+
+    <div style="overflow-x: auto;">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Featured</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>
+                        {% if product.image_url %}
+                        <img src="{{ url_for('static', filename='images/products/' + product.image_url) }}" width="50" alt="{{ product.name }}">
+                        {% else %}
+                        No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.brand_name }}</td>
+                    <td>₹{{ product.price }}</td>
+                    <td {% if product.stock < 5 %}style="color: #ff5252; font-weight: bold;"{% endif %}>{{ product.stock }}</td>
+                    <td>{{ 'Yes' if product.is_featured else 'No' }}</td>
+                    <td class="action-links">
+                        <a href="{{ url_for('delete_product', id=product.id) }}" class="delete" onclick="return confirm('Delete this product?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not products %}
+                <tr>
+                    <td colspan="8">No products added yet.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

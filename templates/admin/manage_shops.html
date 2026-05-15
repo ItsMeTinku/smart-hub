@@ -1,0 +1,55 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="admin-panel-section">
+    <h2>Manage Retail Shops</h2>
+    <form method="POST" class="admin-form" style="max-width: 600px; margin-bottom: 30px;">
+        <div class="form-group">
+            <label>Shop Name / Branch</label>
+            <input type="text" name="name" required placeholder="e.g. Downtown Branch">
+        </div>
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="text" name="contact_number" required>
+        </div>
+        <div class="form-group">
+            <label>Full Address</label>
+            <textarea name="address" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Google Maps Link (Optional)</label>
+            <input type="url" name="map_link">
+        </div>
+        <button type="submit" class="btn-admin">Add Shop</button>
+    </form>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in shops %}
+            <tr>
+                <td>{{ shop.id }}</td>
+                <td>{{ shop.name }}</td>
+                <td>{{ shop.contact_number }}</td>
+                <td>{{ shop.address }}</td>
+                <td class="action-links">
+                    <a href="{{ url_for('delete_shop', id=shop.id) }}" class="delete" onclick="return confirm('Delete shop?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not shops %}
+            <tr>
+                <td colspan="5">No shops added yet.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

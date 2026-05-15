@@ -1,0 +1,60 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>Total Brands</h3>
+        <p class="value">{{ stats.brands }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Products</h3>
+        <p class="value">{{ stats.products }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Active Offers</h3>
+        <p class="value">{{ stats.offers }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Retail Shops</h3>
+        <p class="value">{{ stats.shops }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Inquiries</h3>
+        <p class="value">{{ stats.inquiries }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Service Bookings</h3>
+        <p class="value">{{ stats.bookings }}</p>
+    </div>
+</div>
+
+<div class="admin-panel-section">
+    <h2>Analytics Chart</h2>
+    <div class="chart-container" style="text-align: center; margin-top: 20px;">
+        <img src="{{ url_for('admin_chart') }}" alt="Analytics Chart" style="max-width: 100%; border-radius: 8px;">
+    </div>
+</div>
+
+{% if low_stock %}
+<div class="admin-panel-section">
+    <h2 style="color: #ff5252;">Low Stock Alerts</h2>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Current Stock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in low_stock %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td style="color: #ff5252; font-weight: bold;">{{ item.stock }}</td>
+                <td><a href="{{ url_for('manage_products') }}" class="btn-admin" style="padding: 5px 10px; font-size: 0.8rem;">Update</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

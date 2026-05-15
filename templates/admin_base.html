@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Smart Mobile Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('manage_brands') }}">Manage Brands</a></li>
+                <li><a href="{{ url_for('manage_products') }}">Manage Products</a></li>
+                <li><a href="{{ url_for('manage_offers') }}">Manage Offers</a></li>
+                <li><a href="{{ url_for('manage_shops') }}">Manage Shops</a></li>
+                <li><a href="{{ url_for('view_inquiries') }}">Inquiries</a></li>
+                <li><a href="{{ url_for('view_bookings') }}">Bookings</a></li>
+                <li style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                    <a href="{{ url_for('dashboard') }}" style="color: #4cd137;">View User Dashboard</a>
+                </li>
+                <li><a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a></li>
+            </ul>
+        </aside>
+        
+        <main class="admin-content">
+            <div class="admin-topbar">
+                <p>Welcome, {{ session.get('admin_username', 'Admin') }}</p>
+            </div>
+            <div class="container mt-2">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Smart Mobile Hub - Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-content">
+        <h1>Experience the Future of Mobile</h1>
+        <p>Discover the latest and greatest smartphones at unbeatable prices.</p>
+        <a href="{{ url_for('mobiles') }}" class="btn-primary">Shop Now</a>
+    </div>
+</section>
+
+<section class="featured-brands mt-4">
+    <div class="container">
+        <h2 class="section-title">Featured Brands</h2>
+        <div class="brand-grid">
+            {% for brand in brands %}
+            <div class="brand-card">
+                <a href="{{ url_for('mobiles', brand=brand.id) }}">
+                    {% if brand.image_url %}
+                    <img src="{{ url_for('static', filename='images/brands/' + brand.image_url) }}" alt="{{ brand.name }}">
+                    {% else %}
+                    <div class="placeholder-img">{{ brand.name }}</div>
+                    {% endif %}
+                </a>
+                <h3>{{ brand.name }}</h3>
+            </div>
+            {% endfor %}
+            {% if not brands %}
+            <p>No brands to show yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="latest-mobiles mt-4 mb-4">
+    <div class="container">
+        <h2 class="section-title">Featured Mobiles</h2>
+        <div class="product-grid">
+            {% for mobile in mobiles %}
+            <div class="product-card">
+                <a href="{{ url_for('mobile_details', id=mobile.id) }}">
+                    {% if mobile.image_url %}
+                    <img src="{{ url_for('static', filename='images/products/' + mobile.image_url) }}" alt="{{ mobile.name }}">
+                    {% else %}
+                    <div class="placeholder-img">Device Image</div>
+                    {% endif %}
+                </a>
+                <div class="product-info">
+                    <span class="brand-badge">{{ mobile.brand_name }}</span>
+                    <h3>{{ mobile.name }}</h3>
+                    <p class="price">₹{{ mobile.price }}</p>
+                    <a href="{{ url_for('mobile_details', id=mobile.id) }}" class="btn-secondary">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not mobiles %}
+            <p>No featured mobiles yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

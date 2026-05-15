@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Our Retail Shops - Smart Mobile Hub{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <h1 class="page-title">Find Our Retail Stores</h1>
+    <p>Visit us at one of our physical locations to experience the latest devices.</p>
+    
+    <div class="shops-grid mt-4">
+        {% for shop in shops %}
+        <div class="shop-card">
+            <div class="shop-icon">🏬</div>
+            <div class="shop-info">
+                <h3>{{ shop.name }}</h3>
+                <p><strong>Address:</strong> {{ shop.address }}</p>
+                <p><strong>Contact:</strong> {{ shop.contact_number }}</p>
+                {% if shop.map_link %}
+                <a href="{{ shop.map_link }}" target="_blank" class="btn-secondary mt-2">View on Map</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% if not shops %}
+        <p>No retail shops listed yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

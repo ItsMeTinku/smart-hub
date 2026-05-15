@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Smart Mobile Hub - All Mobiles{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <h1 class="page-title">Explore Our Mobiles</h1>
+    
+    <div class="filter-bar">
+        <form method="GET" action="{{ url_for('mobiles') }}" class="filter-form">
+            <label for="brand">Filter by Brand:</label>
+            <select name="brand" id="brand" onchange="this.form.submit()">
+                <option value="">All Brands</option>
+                {% for b in brands %}
+                <option value="{{ b.id }}" {% if request.args.get('brand')|string == b.id|string %}selected{% endif %}>{{ b.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <div class="product-grid mt-4">
+        {% for mobile in mobiles %}
+        <div class="product-card">
+            <a href="{{ url_for('mobile_details', id=mobile.id) }}">
+                {% if mobile.image_url %}
+                <img src="{{ url_for('static', filename='images/products/' + mobile.image_url) }}" alt="{{ mobile.name }}">
+                {% else %}
+                <div class="placeholder-img">Device Image</div>
+                {% endif %}
+            </a>
+            <div class="product-info">
+                <span class="brand-badge">{{ mobile.brand_name }}</span>
+                <h3>{{ mobile.name }}</h3>
+                <p class="price">₹{{ mobile.price }}</p>
+                <a href="{{ url_for('mobile_details', id=mobile.id) }}" class="btn-secondary">View Details</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not mobiles %}
+        <p>No mobiles found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

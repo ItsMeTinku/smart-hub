@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Compare Mobiles - Smart Mobile Hub{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <h1 class="page-title">Compare Mobiles</h1>
+    <p>Select two mobiles to compare their specifications side-by-side.</p>
+    
+    <div class="compare-selectors">
+        <form method="GET" action="{{ url_for('compare') }}" class="compare-form">
+            <div class="selector-group">
+                <label>Mobile 1:</label>
+                <select name="m1" onchange="this.form.submit()">
+                    <option value="">-- Select Mobile 1 --</option>
+                    {% for m in mobiles %}
+                    <option value="{{ m.id }}" {% if request.args.get('m1')|string == m.id|string %}selected{% endif %}>{{ m.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="selector-group">
+                <label>Mobile 2:</label>
+                <select name="m2" onchange="this.form.submit()">
+                    <option value="">-- Select Mobile 2 --</option>
+                    {% for m in mobiles %}
+                    <option value="{{ m.id }}" {% if request.args.get('m2')|string == m.id|string %}selected{% endif %}>{{ m.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="compare-results mt-4">
+        {% if m1 or m2 %}
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>{% if m1 %}{{ m1.name }}{% else %}Not Selected{% endif %}</th>
+                    <th>{% if m2 %}{{ m2.name }}{% else %}Not Selected{% endif %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Image</td>
+                    <td>
+                        {% if m1 %}
+                            {% if m1.image_url %}
+                            <img src="{{ url_for('static', filename='images/products/' + m1.image_url) }}" alt="img" width="100">
+                            {% else %}
+                            <div class="placeholder-img small">Image</div>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if m2 %}
+                            {% if m2.image_url %}
+                            <img src="{{ url_for('static', filename='images/products/' + m2.image_url) }}" alt="img" width="100">
+                            {% else %}
+                            <div class="placeholder-img small">Image</div>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Brand</td>
+                    <td>{{ m1.brand_name if m1 else '-' }}</td>
+                    <td>{{ m2.brand_name if m2 else '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>{{ '₹' ~ m1.price if m1 else '-' }}</td>
+                    <td>{{ '₹' ~ m2.price if m2 else '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Specifications</td>
+                    <td>{{ m1.specs if m1 else '-' }}</td>
+                    <td>{{ m2.specs if m2 else '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>Please select at least one mobile to compare.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

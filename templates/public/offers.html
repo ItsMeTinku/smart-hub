@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Latest Offers - Smart Mobile Hub{% endblock %}
+{% block content %}
+<div class="container mt-4 mb-4">
+    <h1 class="page-title">Special Offers & Discounts</h1>
+    
+    <div class="offers-grid mt-4">
+        {% for offer in offers %}
+        <div class="offer-card">
+            <div class="offer-discount">{{ offer.discount_percent }}% OFF</div>
+            <div class="offer-details">
+                <h3>{{ offer.title }}</h3>
+                <p>{{ offer.description }}</p>
+                <p class="offer-validity">Valid until: {{ offer.valid_until }}</p>
+                <a href="{{ url_for('mobiles') }}" class="btn-primary mt-2">Shop Now</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not offers %}
+        <p>No active offers at the moment. Please check back later!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

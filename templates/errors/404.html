@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; padding: 5rem 2rem;">
+    <h1 style="font-size: 6rem; color: var(--primary-color);">404</h1>
+    <h2>Oops! Page Not Found</h2>
+    <p style="opacity: 0.7; margin: 1.5rem 0;">The page you are looking for might have been removed or is temporarily unavailable.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+</div>
+{% endblock %}

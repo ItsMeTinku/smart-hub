@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 2rem;">
+    <h1>Welcome back, {{ session.get('username') }}!</h1>
+    <p style="opacity: 0.7;">Here is what's happening in your Smart Hub today.</p>
+</div>
+
+<!-- Stats Row -->
+{% if session.get('role') == 'manager' or session.get('admin_logged_in') %}
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3><i class="fas fa-eye"></i> System Activity</h3>
+        <div class="value">{{ stats.activity }}</div>
+        <div style="font-size: 0.8rem; color: #10b981; margin-top: 0.5rem;"><i class="fas fa-arrow-up"></i> Real-time tracking</div>
+    </div>
+    <div class="stat-card">
+        <h3><i class="fas fa-shopping-cart"></i> Total Products</h3>
+        <div class="value">{{ stats.products }}</div>
+        <div style="font-size: 0.8rem; color: #6366f1; margin-top: 0.5rem;">Inventory level</div>
+    </div>
+    <div class="stat-card">
+        <h3><i class="fas fa-envelope-open-text"></i> Total Inquiries</h3>
+        <div class="value">{{ stats.inquiries }}</div>
+        <div style="font-size: 0.8rem; color: #f43f5e; margin-top: 0.5rem;">Customer messages</div>
+    </div>
+    <div class="stat-card">
+        <h3><i class="fas fa-calendar-check"></i> Bookings</h3>
+        <div class="value">{{ stats.bookings }}</div>
+        <div style="font-size: 0.8rem; color: #f59e0b; margin-top: 0.5rem;">Service requests</div>
+    </div>
+</div>
+{% endif %}
+
+<div class="grid-2">
+    <!-- Left Column: News & Activity -->
+    <div>
+        <div class="feature-card">
+            <h2><i class="fas fa-newspaper" style="color: var(--primary-color);"></i> Tech Headlines</h2>
+            <div class="news-list">
+                {% if news %}
+                    {% for article in news %}
+                    <div class="news-item">
+                        <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+                        <p>{{ article.source.name }} • {{ article.publishedAt[:10] }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Unable to fetch news at the moment.</p>
+                {% endif %}
+            </div>
+            <a href="#" class="btn btn-primary" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">View All News</a>
+        </div>
+
+        {% if session.get('role') == 'manager' or session.get('admin_logged_in') %}
+        <div class="feature-card">
+            <h2><i class="fas fa-history" style="color: var(--secondary-color);"></i> Recent Activity</h2>
+            <div class="activity-list">
+                {% if activities %}
+                    {% for act in activities %}
+                    <div style="padding: 1rem 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="display: block;">{{ act.activity_type }}</strong>
+                            <span style="font-size: 0.85rem; opacity: 0.7;">{{ act.description }}</span>
+                        </div>
+                        <span style="font-size: 0.75rem; opacity: 0.5;">{{ act.timestamp }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recent activity found.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="feature-card">
+            <h2><i class="fas fa-tags" style="color: var(--secondary-color);"></i> Featured Brands</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                {% for brand in brands %}
+                <div class="brand-item" style="text-align: center;">
+                    <a href="{{ url_for('mobiles', brand=brand.id) }}">
+                        {% if brand.image_url %}
+                        <img src="{{ url_for('static', filename='images/brands/' + brand.image_url) }}" alt="{{ brand.name }}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: contain; background: #fff; padding: 5px; border: 1px solid var(--border-color);">
+                        {% else %}
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 0.6rem;">{{ brand.name }}</div>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('mobiles') }}" class="btn" style="margin-top: 1rem; display: block; text-align: center; border: 1px solid var(--border-color);">All Brands</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Right Column: Weather & Quick Links -->
+    <div>
+        <div class="weather-widget">
+            <h2 style="margin-bottom: 1rem;"><i class="fas fa-cloud-sun"></i> Weather</h2>
+            {% if weather %}
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="font-size: 3rem; font-weight: 700;">{{ weather.temperature }}°C</div>
+                    <div>
+                        <div style="font-weight: 600;">Wind: {{ weather.windspeed }} km/h</div>
+                        <div style="opacity: 0.9;">New Delhi, India</div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Weather data unavailable.</p>
+            {% endif %}
+        </div>
+
+        {% if session.get('role') == 'manager' or session.get('admin_logged_in') %}
+        <div class="feature-card">
+            <h2><i class="fas fa-bolt" style="color: #f59e0b;"></i> Quick Actions</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                <a href="{{ url_for('manage_products') }}" class="btn" style="background: #eef2ff; color: #4338ca; text-align: center; text-decoration: none; padding: 1rem;">
+                    <i class="fas fa-plus"></i><br>Add Product
+                </a>
+                <a href="{{ url_for('view_inquiries') }}" class="btn" style="background: #fff1f2; color: #be123c; text-align: center; text-decoration: none; padding: 1rem;">
+                    <i class="fas fa-envelope"></i><br>Inquiries
+                </a>
+                <a href="{{ url_for('manage_brands') }}" class="btn" style="background: #f0fdf4; color: #15803d; text-align: center; text-decoration: none; padding: 1rem;">
+                    <i class="fas fa-copyright"></i><br>Brands
+                </a>
+                <a href="{{ url_for('manage_offers') }}" class="btn" style="background: #fffbeb; color: #b45309; text-align: center; text-decoration: none; padding: 1rem;">
+                    <i class="fas fa-gift"></i><br>Offers
+                </a>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h2><i class="fas fa-info-circle"></i> System Status</h2>
+            <div style="margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Database</span>
+                    <span style="color: #10b981;"><i class="fas fa-check-circle"></i> Healthy</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Storage</span>
+                    <span style="color: #10b981;"><i class="fas fa-check-circle"></i> 82% Free</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>API Services</span>
+                    <span style="color: #f59e0b;"><i class="fas fa-exclamation-triangle"></i> Limited</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h2><i class="fas fa-chart-bar" style="color: #e14eca;"></i> System Analytics</h2>
+            <div style="text-align: center; margin-top: 1rem;">
+                <img src="{{ url_for('admin_chart') }}" alt="Analytics Chart" style="max-width: 100%; border-radius: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+            </div>
+            <a href="{{ url_for('analytics') }}" class="btn" style="margin-top: 1rem; display: block; text-align: center; border: 1px solid var(--border-color); text-decoration: none;">Detailed Reports</a>
+        </div>
+
+        {% if low_stock %}
+        <div class="feature-card">
+            <h2 style="color: #f43f5e;"><i class="fas fa-exclamation-circle"></i> Low Stock Alerts</h2>
+            <div style="margin-top: 1rem; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                            <th style="padding: 0.5rem;">Product</th>
+                            <th style="padding: 0.5rem;">Stock</th>
+                            <th style="padding: 0.5rem;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in low_stock %}
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 0.5rem;">{{ item.name }}</td>
+                            <td style="padding: 0.5rem; color: #f43f5e; font-weight: 600;">{{ item.stock }}</td>
+                            <td style="padding: 0.5rem;"><a href="{{ url_for('manage_products') }}" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">Update</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="feature-card">
+            <h2><i class="fas fa-shopping-bag" style="color: var(--primary-color);"></i> Featured Mobiles</h2>
+            <p>Check out our latest arrivals and exclusive offers.</p>
+            <a href="{{ url_for('mobiles') }}" class="btn btn-primary" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">Browse Store</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

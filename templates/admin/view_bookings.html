@@ -1,0 +1,41 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="admin-panel-section">
+    <h2>Service & Repair Bookings</h2>
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Device</th>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.created_at.split()[0] if booking.created_at else '' }}</td>
+                <td>
+                    {{ booking.customer_name }}<br>
+                    <small>{{ booking.phone }}</small>
+                </td>
+                <td>{{ booking.device_model }}</td>
+                <td style="max-width: 250px; word-wrap: break-word;">{{ booking.issue_description }}</td>
+                <td><span style="background: #f39c12; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; color: #fff;">{{ booking.status }}</span></td>
+                <td class="action-links">
+                    <a href="{{ url_for('delete_booking', id=booking.id) }}" class="delete" onclick="return confirm('Delete this booking?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not bookings %}
+            <tr>
+                <td colspan="6">No service bookings yet.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ session.get('theme', 'light') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Hub System{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    {% if session.get('user_id') or session.get('admin_logged_in') %}
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-hubspot"></i>
+            <span>Smart Hub</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="{{ url_for('dashboard') }}" class="menu-link {{ 'active' if request.path == url_for('dashboard') }}">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            {% if session.get('role') != 'manager' and not session.get('admin_logged_in') %}
+            <!-- Links for regular users -->
+            <li class="menu-item">
+                <a href="{{ url_for('index') }}" class="menu-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('mobiles') }}" class="menu-link">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Mobiles</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('offers') }}" class="menu-link">
+                    <i class="fas fa-tag"></i>
+                    <span>Offers</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('shops') }}" class="menu-link">
+                    <i class="fas fa-store"></i>
+                    <span>Shops</span>
+                </a>
+            </li>
+            {% endif %}
+            
+            {% if session.get('role') == 'manager' or session.get('admin_logged_in') %}
+            <li class="menu-item">
+                <a href="{{ url_for('analytics') }}" class="menu-link {{ 'active' if request.path == url_for('analytics') }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('mobiles') }}" class="menu-link">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('offers') }}" class="menu-link">
+                    <i class="fas fa-tag"></i>
+                    <span>Offers</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url_for('shops') }}" class="menu-link">
+                    <i class="fas fa-store"></i>
+                    <span>Our Shops</span>
+                </a>
+            </li>
+            <div style="margin-top: 2rem; padding: 0 1.2rem; font-size: 0.75rem; text-transform: uppercase; opacity: 0.5;">Admin</div>
+            <li class="menu-item">
+                <a href="{{ url_for('admin_dashboard') }}" class="menu-link">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin Panel</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <!-- Navbar -->
+        <header class="navbar">
+            <div class="nav-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="featureSearch" placeholder="Search features...">
+            </div>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas {{ 'fa-sun' if session.get('theme') == 'dark' else 'fa-moon' }}"></i>
+                </button>
+                
+                <div class="notif-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-badge">3</span>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="avatar">{{ session.get('username')[0].upper() if session.get('username') else 'U' }}</div>
+                    <span style="font-weight: 500;">{{ session.get('username') }}</span>
+                    <a href="{{ url_for('logout') }}" title="Logout" style="color: var(--secondary-color); margin-left: 0.5rem;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+    {% else %}
+        <!-- Public Navbar -->
+        <header class="navbar" style="position: sticky; top: 0; left: 0; width: 100%; border-bottom: 1px solid var(--border-color); background: var(--navbar-bg); z-index: 1000; padding: 0 5%;">
+            <div class="sidebar-header" style="padding: 0;">
+                <i class="fas fa-hubspot"></i>
+                <span>Smart Hub</span>
+            </div>
+            <nav style="display: flex; gap: 2rem;">
+                <a href="{{ url_for('index') }}" style="text-decoration: none; color: var(--text-color); font-weight: 500;">Home</a>
+                <a href="{{ url_for('mobiles') }}" style="text-decoration: none; color: var(--text-color); font-weight: 500;">Mobiles</a>
+                <a href="{{ url_for('offers') }}" style="text-decoration: none; color: var(--text-color); font-weight: 500;">Offers</a>
+                <a href="{{ url_for('shops') }}" style="text-decoration: none; color: var(--text-color); font-weight: 500;">Shops</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="{{ url_for('login') }}" class="btn" style="text-decoration: none; color: var(--text-color);">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-primary" style="text-decoration: none;">Sign Up</a>
+            </div>
+        </header>
+
+        {% block auth_content %}{% endblock %}
+    {% endif %}
+
+    <main class="{{ 'content-area animate-fade' if session.get('user_id') or session.get('admin_logged_in') else 'container' }}" 
+          style="{{ '' if session.get('user_id') or session.get('admin_logged_in') else 'padding: 2rem 5%;' }}">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem; background: {{ '#d1fae5' if category == 'success' else '#fee2e2' }}; color: {{ '#065f46' if category == 'success' else '#991b1b' }};">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if session.get('user_id') or session.get('admin_logged_in') %}
+    </div> <!-- end main-wrapper -->
+    {% endif %}
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Update UI
+            html.setAttribute('data-theme', newTheme);
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            
+            // Save to server
+            fetch('/api/toggle-theme', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ theme: newTheme })
+            });
+        }
+
+        // Feature search logic
+        const searchInput = document.getElementById('featureSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.feature-card, .stat-card');
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    card.style.display = text.includes(term) ? 'block' : 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
