@@ -22,6 +22,176 @@ The project demonstrates real-world patterns: role-based access control, server-
 
 ---
 
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    subgraph Browser["🌐 Client (Browser)"]
+        PUB["Public Pages\n(index, mobiles, compare, offers, shops)"]
+        USR["User Portal\n(dashboard, analytics)"]
+        ADM["Admin Panel\n(dashboard, CRUD, charts)"]
+    end
+
+    subgraph Flask["⚙️ Flask Backend (app.py)"]
+        PUB_ROUTES["Public Routes\n/ /mobiles /compare /offers /shops /contact /service"]
+        AUTH_ROUTES["Auth Routes\n/register /login /logout"]
+        USER_ROUTES["User Routes\n/dashboard /analytics /api/toggle-theme"]
+        ADMIN_ROUTES["Admin Routes\n/admin/* (CRUD + Charts)"]
+        BEFORE_REQ["before_request Hook\n(Admin Auth Guard)"]
+        LOGIN_DEC["@login_required\n(User Auth Decorator)"]
+    end
+
+    subgraph Data["💾 Data Layer"]
+        DB[("SQLite\nsmarthub.db")]
+        FS["Static Files\nstatic/images/\nproducts | brands | banners"]
+    end
+
+    subgraph External["🌍 External APIs"]
+        WEATHER["Open-Meteo API\n(Live Weather)"]
+        NEWS["NewsAPI\n(Tech Headlines)"]
+    end
+
+    subgraph Rendering["🖼️ Template Engine"]
+        JINJA["Jinja2 Templates\n+ Vanilla CSS (Glassmorphism)"]
+        MATPLOTLIB["Matplotlib\n(Server-Side PNG Charts)"]
+    end
+
+    Browser --> Flask
+    Flask --> Data
+    Flask --> External
+    Flask --> Rendering
+    Rendering --> Browser
+```
+
+---
+
+## 🗄️ Database Schema
+
+```mermaid
+erDiagram
+    users {
+        INTEGER id PK
+        TEXT username UK
+        TEXT email UK
+        TEXT password_hash
+        TIMESTAMP created_at
+    }
+    user_preferences {
+        INTEGER user_id PK
+        TEXT theme
+        TEXT dashboard_layout
+    }
+    activity_logs {
+        INTEGER id PK
+        INTEGER user_id FK
+        TEXT activity_type
+        TEXT description
+        TIMESTAMP timestamp
+    }
+    admin {
+        INTEGER id PK
+        TEXT username UK
+        TEXT password_hash
+    }
+    brand {
+        INTEGER id PK
+        TEXT name UK
+        TEXT image_url
+    }
+    product {
+        INTEGER id PK
+        INTEGER brand_id FK
+        TEXT name
+        REAL price
+        TEXT description
+        TEXT specs
+        INTEGER stock
+        TEXT image_url
+        INTEGER is_featured
+    }
+    offer {
+        INTEGER id PK
+        TEXT title
+        TEXT description
+        REAL discount_percent
+        TEXT valid_until
+    }
+    shop {
+        INTEGER id PK
+        TEXT name
+        TEXT address
+        TEXT contact_number
+        TEXT map_link
+    }
+    inquiry {
+        INTEGER id PK
+        TEXT name
+        TEXT email
+        TEXT phone
+        TEXT message
+        TIMESTAMP created_at
+    }
+    booking {
+        INTEGER id PK
+        TEXT customer_name
+        TEXT phone
+        TEXT device_model
+        TEXT issue_description
+        TEXT status
+        TIMESTAMP created_at
+    }
+
+    users ||--o| user_preferences : "has"
+    users ||--o{ activity_logs : "generates"
+    brand ||--o{ product : "makes"
+```
+
+---
+
+## 🔄 Application Workflow
+
+```mermaid
+flowchart TD
+    START([User visits site]) --> PUBLIC
+
+    PUBLIC{{"🌐 Public Pages\n(no login required)"}}
+    PUBLIC --> HOME[Homepage\nFeatured mobiles & brands]
+    PUBLIC --> MOBILES[Browse Mobiles\nFiltered by brand]
+    PUBLIC --> COMPARE[Compare Tool\nSide-by-side specs]
+    PUBLIC --> OFFERS[Offers Page]
+    PUBLIC --> SHOPS[Shop Branches]
+    PUBLIC --> CONTACT[Contact Form → inquiry table]
+    PUBLIC --> SERVICE[Service Booking → booking table]
+
+    PUBLIC --> AUTH
+
+    AUTH{{"🔐 Authentication"}}
+    AUTH --> REGISTER[Register\nHashed password stored]
+    REGISTER --> LOGIN
+    AUTH --> LOGIN[Login\nSession created]
+
+    LOGIN --> ROLE{Role?}
+
+    ROLE -- Regular User --> USER_DASH
+    ROLE -- Manager --> MANAGER_DASH
+    ROLE -- Admin --> ADMIN_PANEL
+
+    USER_DASH[["👤 User Dashboard\n• Live weather widget\n• Tech news feed\n• Activity log\n• Dark/Light toggle"]]
+
+    MANAGER_DASH[["📊 Manager View\n• All User Dashboard features\n• Analytics charts\n• Low-stock alerts"]]
+
+    ADMIN_PANEL[["👑 Admin Panel\n(Separate session via /admin/login)"]]
+    ADMIN_PANEL --> ADMIN_DASH[Dashboard\nLive stats + Matplotlib chart]
+    ADMIN_PANEL --> BRANDS[Manage Brands\nCRUD + Image upload]
+    ADMIN_PANEL --> PRODUCTS[Manage Products\nCRUD + Image upload + Featured flag]
+    ADMIN_PANEL --> ADMIN_OFFERS[Manage Offers\nCRUD]
+    ADMIN_PANEL --> ADMIN_SHOPS[Manage Shops\nCRUD]
+    ADMIN_PANEL --> INQUIRIES[View Inquiries\nFrom contact form]
+    ADMIN_PANEL --> BOOKINGS[View Bookings\nFrom service form]
+```
+
+---
+
 ## 📸 Screenshots
 
 ### 🌐 Public Website Interfaces
