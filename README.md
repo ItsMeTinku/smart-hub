@@ -1,151 +1,161 @@
 <div align="center">
-  <h1>📱 Smart Mobile Hub</h1>
-  <p><strong>A Modern, Full-Stack E-Commerce & Retail Management System</strong></p>
 
-  <p>
-    <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python Version" />
-    <img src="https://img.shields.io/badge/Flask-3.0.3-lightgrey.svg" alt="Flask" />
-    <img src="https://img.shields.io/badge/Database-SQLite3-green.svg" alt="SQLite3" />
-    <img src="https://img.shields.io/badge/Frontend-HTML5%20%7C%20CSS3-orange.svg" alt="Frontend" />
-    <img src="https://img.shields.io/badge/Data%20Viz-Matplotlib-yellow.svg" alt="Data Viz" />
-  </p>
+# 📱 Smart Mobile Hub
+
+**A Full-Stack E-Commerce & Retail Management System**
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.0.3-lightgrey.svg)](https://flask.palletsprojects.com)
+[![SQLite](https://img.shields.io/badge/Database-SQLite3-green.svg)](https://sqlite.org)
+[![Frontend](https://img.shields.io/badge/Frontend-HTML5%20%7C%20CSS3-orange.svg)](#)
+[![Matplotlib](https://img.shields.io/badge/Charts-Matplotlib-yellow.svg)](https://matplotlib.org)
+
 </div>
 
 ---
 
-## 📖 Project Overview
+## 📖 Overview
 
-**Smart Mobile Hub** is an advanced, industry-level web application designed for a mobile retail company. It bridges the gap between a sleek public-facing e-commerce catalog and a secure, data-rich SaaS Dashboard for management and authenticated users.
+**Smart Mobile Hub** is a full-stack web application for a mobile retail business. It combines a public-facing e-commerce catalog with a secure admin dashboard and a personalized user portal — all built with Flask and SQLite.
 
-Recently updated to include robust multi-role architecture, this project features comprehensive user authentication, personalized user dashboards with live APIs (Weather & News), theme preferences, and advanced admin analytics.
-
-It is perfectly suited as a portfolio project, demonstrating a strong understanding of full-stack Python development, relational databases, secure authentication, data visualization, and modern UI/UX design.
+The project demonstrates real-world patterns: role-based access control, server-side chart generation, live API integrations, session management, and file upload handling.
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-### 🛒 Public Website (Customer Facing)
-*   **Dynamic Catalog:** Browse the latest smartphone models and featured brands.
-*   **Product Details & Stock:** Detailed specification pages with real-time pricing and stock availability.
-*   **Compare Tool:** Side-by-side technical specification comparison between any two mobile devices.
-*   **Offers & Shops:** Dedicated sections for active discounts and physical retail branch locations.
-*   **Interactive Forms:** "Contact Us" inquiries and "Service & Repair" booking forms.
+### 🌐 Public Website
+- Browse the latest smartphones with detailed specs and pricing
+- Side-by-side product comparison tool
+- Active offers and physical shop branch listings
+- Contact form and service/repair booking form
 
-### 👤 Authenticated User Portal
-*   **Secure Registration/Login:** Password hashing via Werkzeug Security.
-*   **Personalized Dashboard:**
-    *   Live local Weather API integration.
-    *   Live Tech News API integration.
-    *   Recent user activity tracking.
-*   **Theme Preferences:** Interactive Dark/Light mode toggle stored in user preferences.
-*   **User Analytics:** Visual breakdown of user activity logs.
+### 👤 User Dashboard
+- Secure registration and login (passwords hashed with Werkzeug)
+- Live **Weather** widget (Open-Meteo API)
+- Live **Tech News** feed (NewsAPI)
+- Dark/Light theme toggle saved to user preferences
+- Personal activity log with visual analytics
 
-### 👑 Admin SaaS Dashboard (Management)
-*   **Role-Based Access Control:** Secure, password-protected admin routes.
-*   **Advanced Analytics Dashboard:**
-    *   Live stat counters for inventory, inquiries, and bookings.
-    *   Dynamic Matplotlib-generated charts visualizing product distribution.
-    *   Automated **Low Stock Alerts** for efficient inventory management.
-*   **Comprehensive CRUD Operations:** Add, Edit, and Delete functionality with file upload handling for:
-    *   Mobile Brands & Smartphone Products
-    *   Special Offers & Retail Shop Branches
-*   **Customer Relationship Management:** View and manage customer inquiries and service repair bookings.
+### 👑 Admin Panel
+- Role-based access control with separate admin session
+- Analytics dashboard with live stat counters and Matplotlib charts
+- Automated **low stock alerts**
+- Full CRUD for products, brands, offers, and shop branches (including image uploads)
+- View and manage customer inquiries and service bookings
 
 ---
 
 ## 🚀 Tech Stack
 
-*   **Backend:** Python 3, Flask, Werkzeug
-*   **Database:** SQLite3 (Relational DB with Raw SQL and complex Joins)
-*   **Frontend:** HTML5 (Jinja2 Templates), Vanilla CSS3 (Glassmorphism, Responsive UI)
-*   **External APIs:** Open-Meteo (Weather), NewsAPI
-*   **Data Visualization:** Matplotlib (Server-side generated charts)
+| Layer | Technology |
+|---|---|
+| Backend | Python 3, Flask, Werkzeug |
+| Database | SQLite3 (raw SQL with joins) |
+| Frontend | Jinja2 templates, Vanilla CSS3 (glassmorphism) |
+| APIs | Open-Meteo (weather), NewsAPI (tech news) |
+| Charts | Matplotlib (server-side rendering) |
 
 ---
 
-## 🛠️ Installation & Setup Guide
+## 🛠️ Setup
 
 ### Prerequisites
-*   Python 3.8 or higher installed on your system.
-*   Basic understanding of command-line operations.
+- Python 3.8+
+- `pip`
 
-### Step-by-Step Setup
+### Steps
 
-1. **Clone or Download the Repository**
-   Extract the project folder to your desired location and navigate into it:
-   ```bash
-   cd path/to/smart-hub2
-   ```
+**1. Navigate into the project folder**
+```bash
+cd path/to/smart-hub2
+```
 
-2. **Create a Virtual Environment (Recommended)**
-   ```bash
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
+**2. Create and activate a virtual environment**
+```bash
+python -m venv venv
 
-3. **Install Required Dependencies**
-   Install the necessary Python packages using `pip`:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Windows
+venv\Scripts\activate
 
-4. **Initialize the Database**
-   Run the database setup script. This will create the `smarthub.db` file, set up all necessary tables, and generate the default admin user.
-   ```bash
-   python database.py
-   ```
+# macOS / Linux
+source venv/bin/activate
+```
 
-5. **Start the Web Server**
-   Run the Flask application:
-   ```bash
-   python app.py
-   ```
+**3. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-6. **Access the Application**
-   Open your web browser and go to:
-   *   **Public Website:** `http://127.0.0.1:5000/`
-   *   **User Login:** `http://127.0.0.1:5000/login`
-   *   **Admin Panel:** `http://127.0.0.1:5000/admin/login`
+**4. Initialize the database**
 
----
+This creates `smarthub.db`, sets up all tables, and seeds the default admin account.
+```bash
+python database.py
+```
 
-## 🔐 System Credentials
+**5. Run the app**
+```bash
+python app.py
+```
 
-### Admin Account
-Upon running `database.py` for the first time, a default admin account is automatically created:
-*   **Username:** `admin`
-*   **Password:** `admin123`
-*(Note: Change this immediately in a production environment).*
+**6. Open in your browser**
 
-### User Accounts
-You can create a new user account directly from the `/register` page to explore the User Dashboard and Theme preferences.
+| Page | URL |
+|---|---|
+| Public website | http://127.0.0.1:5000/ |
+| User login | http://127.0.0.1:5000/login |
+| Admin panel | http://127.0.0.1:5000/admin/login |
 
 ---
 
-## 📂 Folder Structure
+## 🔐 Default Credentials
 
-```text
-/
-├── app.py                  # Main Flask application & routing logic
-├── database.py             # SQLite database schema and initialization
-├── requirements.txt        # Python dependencies
-├── smarthub.db             # SQLite Database (generated)
-├── static/                 # Static assets (CSS, JS, Uploaded Images)
+| Role | Username | Password |
+|---|---|---|
+| Admin | `admin` | `admin123` |
+| User | *(register via `/register`)* | — |
+
+> ⚠️ Change the admin password before deploying to any public environment.
+
+---
+
+## 📂 Project Structure
+
+```
+smart-hub2/
+├── app.py               # Flask app — all routes and request logic
+├── database.py          # Database schema, initialization, and seeding
+├── requirements.txt     # Python dependencies
+├── smarthub.db          # SQLite database file (auto-generated)
+├── static/
 │   ├── css/
-│   │   ├── admin.css       # Admin dashboard styling
-│   │   └── style.css       # Public website styling
-│   └── images/             # Uploaded product, brand, and banner images
-└── templates/              # HTML templates (Jinja2)
-    ├── admin/              # Admin interface pages
-    ├── auth/               # Login & Registration pages
-    ├── dashboard/          # User personalized dashboard pages
-    ├── errors/             # Custom error pages (404, 500)
-    └── public/             # Public interface pages
+│   │   ├── style.css    # Public site styles
+│   │   └── admin.css    # Admin panel styles
+│   └── images/
+│       ├── products/    # Product images (uploaded via admin)
+│       ├── brands/      # Brand logos
+│       └── banners/     # Promotional banners
+└── templates/
+    ├── base.html        # Public base layout
+    ├── admin_base.html  # Admin base layout
+    ├── admin/           # Admin interface pages
+    ├── auth/            # Login and registration pages
+    ├── dashboard/       # User dashboard pages
+    ├── errors/          # Custom 404 and 500 pages
+    └── public/          # Public-facing pages
 ```
 
 ---
-*Developed with Python, Flask, and ❤️*
+
+## 🔑 Key Implementation Notes
+
+- **Authentication:** Admin and user sessions are tracked independently. Admin routes are protected via a `before_request` hook; user routes use a `login_required` decorator.
+- **Database:** All queries use raw SQL via `sqlite3`. No ORM — joins and parameterized queries are written by hand.
+- **Charts:** Matplotlib generates PNG charts server-side, which are served inline to the admin dashboard.
+- **Image uploads:** Product and brand images are saved to `static/images/` subdirectories and referenced by filename in the database.
+- **Secret key:** The `app.secret_key` is hardcoded for development. Use an environment variable in production.
+
+---
+
+*Built with Python, Flask, and ❤️*
