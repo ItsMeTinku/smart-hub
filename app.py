@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from database import get_db_connection
 
 app = Flask(__name__)
-app.secret_key = 'super_secret_key_smarthub_2026'
+app.secret_key = '  '
 
 # API Configuration (Using placeholder/free APIs)
 WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast?latitude=28.6139&longitude=77.2090&current_weather=true"
