@@ -23,7 +23,7 @@ The project demonstrates real-world patterns: role-based access control, server-
 
 ---
 
-## 🆕 What's New in v2
+##  What's New in v2
 
 > v1 was released on **May 2, 2026**. v2 was released on **May 4, 2026**.
 
@@ -42,7 +42,7 @@ Version 2 was a major update focused on adding a complete **user identity system
 | User Preferences | Theme and layout settings stored in `user_preferences` table |
 | Low Stock Alerts | Shown in user dashboard for manager-role accounts |
 
-### 🗄️ New Database Tables
+###  New Database Tables
 
 | Table | Purpose |
 |---|---|
@@ -50,7 +50,7 @@ Version 2 was a major update focused on adding a complete **user identity system
 | `user_preferences` | Stores per-user theme and layout settings |
 | `activity_logs` | Tracks all user actions with timestamps |
 
-### 📐 Code Growth
+###  Code Growth
 
 | File | v1 | v2 | Change |
 |---|---|---|---|
@@ -112,7 +112,7 @@ v1 had:                         v2 added:
 
 ```mermaid
 graph TD
-    subgraph Browser["🌐 Client (Browser)"]
+    subgraph Browser[" Client (Browser)"]
         PUB["Public Pages\n(index, mobiles, compare, offers, shops)"]
         USR["User Portal\n(dashboard, analytics)"]
         ADM["Admin Panel\n(dashboard, CRUD, charts)"]
@@ -127,17 +127,17 @@ graph TD
         LOGIN_DEC["@login_required\n(User Auth Decorator)"]
     end
 
-    subgraph Data["💾 Data Layer"]
+    subgraph Data[" Data Layer"]
         DB[("SQLite\nsmarthub.db")]
         FS["Static Files\nstatic/images/\nproducts | brands | banners"]
     end
 
-    subgraph External["🌍 External APIs"]
+    subgraph External[" External APIs"]
         WEATHER["Open-Meteo API\n(Live Weather)"]
         NEWS["NewsAPI\n(Tech Headlines)"]
     end
 
-    subgraph Rendering["🖼️ Template Engine"]
+    subgraph Rendering[" Template Engine"]
         JINJA["Jinja2 Templates\n+ Vanilla CSS (Glassmorphism)"]
         MATPLOTLIB["Matplotlib\n(Server-Side PNG Charts)"]
     end
@@ -151,7 +151,7 @@ graph TD
 
 ---
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ```mermaid
 erDiagram
