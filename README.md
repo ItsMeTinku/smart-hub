@@ -232,12 +232,12 @@ erDiagram
     brand ||--o{ product : "makes"
 ```
 
-> 🟢 Tables added in v2: `users`, `user_preferences`, `activity_logs`
-> 🔵 Tables carried over from v1: `admin`, `brand`, `product`, `offer`, `shop`, `inquiry`, `booking`
+>  Tables added in v2: `users`, `user_preferences`, `activity_logs`
+>  Tables carried over from v1: `admin`, `brand`, `product`, `offer`, `shop`, `inquiry`, `booking`
 
 ---
 
-## 🔄 Application Workflow
+##  Application Workflow
 
 ```mermaid
 flowchart TD
@@ -254,7 +254,7 @@ flowchart TD
 
     PUBLIC --> AUTH
 
-    AUTH{{"🔐 Authentication"}}
+    AUTH{{" Authentication"}}
     AUTH --> REGISTER[Register\nHashed password stored]
     REGISTER --> LOGIN
     AUTH --> LOGIN[Login\nSession created]
@@ -265,11 +265,11 @@ flowchart TD
     ROLE -- Manager --> MANAGER_DASH
     ROLE -- Admin --> ADMIN_PANEL
 
-    USER_DASH[["👤 User Dashboard\n• Live weather widget\n• Tech news feed\n• Activity log\n• Dark/Light toggle"]]
+    USER_DASH[[" User Dashboard\n• Live weather widget\n• Tech news feed\n• Activity log\n• Dark/Light toggle"]]
 
-    MANAGER_DASH[["📊 Manager View\n• All User Dashboard features\n• Analytics charts\n• Low-stock alerts"]]
+    MANAGER_DASH[[" Manager View\n• All User Dashboard features\n• Analytics charts\n• Low-stock alerts"]]
 
-    ADMIN_PANEL[["👑 Admin Panel\n(Separate session via /admin/login)"]]
+    ADMIN_PANEL[[" Admin Panel\n(Separate session via /admin/login)"]]
     ADMIN_PANEL --> ADMIN_DASH[Dashboard\nLive stats + Matplotlib chart]
     ADMIN_PANEL --> BRANDS[Manage Brands\nCRUD + Image upload]
     ADMIN_PANEL --> PRODUCTS[Manage Products\nCRUD + Image upload + Featured flag]
@@ -281,7 +281,7 @@ flowchart TD
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 ### 🌐 Public Website Interfaces
 
@@ -295,21 +295,21 @@ flowchart TD
 
 ---
 
-### 👤 User Portal
+###  User Portal
 
-#### 📊 Dashboard (Light & Dark Mode Glassmorphism)
+####  Dashboard (Light & Dark Mode Glassmorphism)
 | Light Mode | Dark Mode |
 |---|---|
 | ![User Dashboard](images/user_dashboard.png) | ![User Dashboard Dark](images/user_dashboard_dark.png) |
 
 ---
 
-### 👑 Admin Control Panel
+###  Admin Control Panel
 
-#### 📈 Interactive Analytics Dashboard (with live Matplotlib chart)
+####  Interactive Analytics Dashboard (with live Matplotlib chart)
 ![Admin Dashboard](images/admin_dashboard.png)
 
-#### ⚙️ Inventory & Product Management
+####  Inventory & Product Management
 ![Admin Manage Products](images/admin_manage_products.png)
 
 ---
@@ -329,7 +329,7 @@ flowchart TD
 - Dark/Light theme toggle saved to user preferences
 - Personal activity log with visual analytics
 
-### 👑 Admin Panel
+###  Admin Panel
 - Role-based access control with separate admin session
 - Analytics dashboard with live stat counters and Matplotlib charts
 - Automated **low stock alerts**
@@ -338,7 +338,7 @@ flowchart TD
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -350,7 +350,7 @@ flowchart TD
 
 ---
 
-## 🛠️ Setup
+##  Setup
 
 ### Prerequisites
 - Python 3.8+
@@ -462,7 +462,7 @@ smart-hub2/
 
 ---
 
-## 🔑 Key Implementation Notes
+##  Key Implementation Notes
 
 - **Authentication:** Admin and user sessions are tracked independently via separate session keys (`admin_logged_in` vs `user_id`). Admin routes are guarded by `before_request()`; user routes use a `login_required` decorator.
 - **Isolated auth tables:** The `admin` table and `users` table are completely separate. Admin credentials cannot log in through `/login`, and user credentials cannot log in through `/admin/login`.
@@ -474,7 +474,7 @@ smart-hub2/
 
 ---
 
-## 📋 Changelog
+##  Changelog
 
 ### v2.0 — May 4, 2026
 - Added full user registration and login system (`/register`, `/login`, `/logout`)
