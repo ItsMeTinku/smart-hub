@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 **Smart Mobile Hub** is a full-stack web application for a mobile retail business. It combines a public-facing e-commerce catalog with a secure admin dashboard and a personalized user portal — all built with Flask and SQLite.
 
