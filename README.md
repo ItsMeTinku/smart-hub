@@ -29,7 +29,7 @@ The project demonstrates real-world patterns: role-based access control, server-
 
 Version 2 was a major update focused on adding a complete **user identity system** on top of the existing admin + public foundation. Here's everything that changed:
 
-### ✅ New Features Added
+###  New Features Added
 
 | Feature | Details |
 |---|---|
