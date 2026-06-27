@@ -61,7 +61,7 @@ Version 2 was a major update focused on adding a complete **user identity system
 
 ---
 
-## 🔀 v1 vs v2 — Full Comparison
+##  v1 vs v2 — Full Comparison
 
 | Area | v1 (smart_hub) | v2 (smart_hub2) |
 |---|---|---|
