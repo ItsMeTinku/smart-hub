@@ -108,7 +108,7 @@ v1 had:                         v2 added:
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```mermaid
 graph TD
