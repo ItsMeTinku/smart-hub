@@ -106,8 +106,6 @@ v1 had:                         v2 added:
   /admin/bookings (+delete)
 ```
 
----
-
 ##  System Architecture
 
 ```mermaid
