@@ -283,7 +283,7 @@ flowchart TD
 
 ### 🌐 Public Website Interfaces
 
-#### 🏠 Homepage
+####  Homepage
 ![Smart Mobile Hub Homepage](images/homepage.png)
 
 #### 📱 Product Catalog & Side-by-Side Comparison
