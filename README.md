@@ -314,7 +314,7 @@ flowchart TD
 
 ## ✨ Features
 
-### 🌐 Public Website
+###  Public Website
 - Browse the latest smartphones with detailed specs and pricing
 - Side-by-side product comparison tool
 - Active offers and physical shop branch listings
