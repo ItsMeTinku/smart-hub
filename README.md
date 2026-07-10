@@ -281,7 +281,7 @@ flowchart TD
 
 ##  Screenshots
 
-### 🌐 Public Website Interfaces
+###  Public Website Interfaces
 
 ####  Homepage
 ![Smart Mobile Hub Homepage](images/homepage.png)
