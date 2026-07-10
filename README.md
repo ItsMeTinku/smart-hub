@@ -241,7 +241,7 @@ erDiagram
 flowchart TD
     START([User visits site]) --> PUBLIC
 
-    PUBLIC{{"🌐 Public Pages\n(no login required)"}}
+    PUBLIC{{" Public Pages\n(no login required)"}}
     PUBLIC --> HOME[Homepage\nFeatured mobiles & brands]
     PUBLIC --> MOBILES[Browse Mobiles\nFiltered by brand]
     PUBLIC --> COMPARE[Compare Tool\nSide-by-side specs]
