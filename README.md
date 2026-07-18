@@ -494,3 +494,5 @@ smart-hub2/
 ---
 
 *Built with Python, Flask, and ❤️*
+
+### Thanks for reading 
